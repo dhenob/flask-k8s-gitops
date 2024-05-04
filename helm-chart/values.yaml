@@ -4,7 +4,7 @@ replicaCount: 1
 image:
   repository: dhenob/weather
   pullPolicy: IfNotPresent
-  tag: 0.0.1
+  tag: "0.1.0"
   
 
 podSecurityContext:
