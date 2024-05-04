@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: weather-ingress
   namespace: {{ .Values.namespace }}
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx 
   rules:
