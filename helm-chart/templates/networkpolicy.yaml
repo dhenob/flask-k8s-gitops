@@ -11,9 +11,7 @@ spec:
     - Ingress
   ingress:
     - from:
-      - namespaceSelector:
-          matchLabels:
-            kubernetes.io/metadata.name: nginx-ingress
+      - namespaceSelector: {}  # Allows traffic from all namespaces
         podSelector:
           matchLabels:
             app.kubernetes.io/name: ingress-nginx
