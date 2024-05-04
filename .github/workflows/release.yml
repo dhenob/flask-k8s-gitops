@@ -24,15 +24,15 @@ jobs:
         git config user.name 'github-actions'
         git config user.email 'github-actions@github.com'
 
-    - name: Commit and push changes
-      env:
-        MY_PERSONAL_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    - name: Commit changes
       run: |
         git add helm-chart/values.yaml
         git commit -m "Update Helm chart for release ${{ github.event.inputs.version }}"
-        if git push https://${MY_PERSONAL_TOKEN}@github.com/dhenob/flask-k8s-gitops.git HEAD:main; then
-          echo "Changes pushed successfully."
-        else
-          echo "Failed to push changes."
-          exit 1
-        fi
+        git status
+
+    - name: Push changes
+      env:
+        MY_PERSONAL_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      run: |
+        git remote set-url origin https://${MY_PERSONAL_TOKEN}@github.com/dhenob/flask-k8s-gitops.git
+        git push origin HEAD:main
