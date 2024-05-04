@@ -31,6 +31,7 @@ jobs:
         git status
 
     - name: Push changes
+      env:
+        MY_PERSONAL_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
-        git remote set-url origin https://${secrets.MY_PERSONAL_TOKEN}@github.com/dhenob/flask-k8s-gitops.git
-        git push origin HEAD:main
+        git push origin main
