@@ -56,7 +56,7 @@ autoscaling:
 namespace: "weather"
 
 ingress:
-  enabled: true
+  enabled: false
   ingressClassName: nginx
   hosts:
     - host: weather.local
