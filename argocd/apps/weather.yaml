@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: airport-service
+  name: weather
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/dhenob/VIwell-Assessment.git'
-    path: apps/airport-service/helm-chart
+    repoURL: 'https://github.com/dhenob/flask-k8s-gitops.git'
+    path: helm-chart
     targetRevision: HEAD
     helm:
       valueFiles:
         - values.yaml
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: airport-service
+    namespace: weather
   syncPolicy:
     automated:
       selfHeal: true
