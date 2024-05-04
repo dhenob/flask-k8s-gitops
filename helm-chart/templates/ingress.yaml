@@ -5,7 +5,6 @@ metadata:
   name: {{ .Values.name }}-ingress
   namespace: {{ .Values.namespace }}
   annotations:
-    # Add any specific annotations needed for your ingress controller or other integrations
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: {{ .Values.ingress.ingressClassName }}
@@ -20,12 +19,12 @@ spec:
             name: {{ .Values.name }}
             port:
               number: {{ .Values.service.port }}
-  tls: 
-  {{- if .Values.ingress.tls }}
+{{- if .Values.ingress.tls.enabled }}
+  tls:
   - hosts:
-    {{- range .Values.ingress.hosts }}
-    - {{ .host }}
+    {{- range .Values.ingress.tls.hosts }}
+    - {{ . }}
     {{- end }}
     secretName: {{ .Values.ingress.tls.secretName }}
-  {{- end }}
+{{- end }}
 {{- end }}
