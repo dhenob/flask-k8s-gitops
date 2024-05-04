@@ -61,7 +61,7 @@ ingress:
   hosts:
     - host: weather.local
       paths:
-        - path: /
+        - path: /weather
           pathType: ImplementationSpecific
           backend:
             service:
