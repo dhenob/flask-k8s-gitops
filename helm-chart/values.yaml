@@ -56,7 +56,7 @@ autoscaling:
 namespace: "weather"
 
 ingress:
-  enabled: true
+  enabled: false
   hosts:
     - host: weather.local
       paths:
