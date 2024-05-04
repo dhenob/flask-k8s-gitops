@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: weather-policy
+  namespace: weather
+spec:
+  podSelector:
+    matchLabels:
+      app: weather
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: nginx-ingress
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/name: ingress-nginx

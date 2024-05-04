@@ -1,0 +1,70 @@
+name: weather
+replicaCount: 1
+
+image:
+  repository: dhenob/weather
+  pullPolicy: IfNotPresent
+  tag: 0.0.1
+  
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsUser: 1000
+  runAsGroup: 1000
+
+containerSecurityContext:
+  capabilities:
+    drop:
+      - ALL
+    add: ["NET_ADMIN"]
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+resources:
+  requests:
+    cpu: "500m" 
+    memory: "256Mi"
+  limits:
+    cpu: "1000m"
+    memory: "512Mi"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+
+namespace: "weather"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: weather.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: weather
+              port:
+                number: 80
+  tls: []

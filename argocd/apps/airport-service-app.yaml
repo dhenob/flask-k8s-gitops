@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airport-service
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/dhenob/VIwell-Assessment.git'
+    path: apps/airport-service/helm-chart
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: airport-service
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
