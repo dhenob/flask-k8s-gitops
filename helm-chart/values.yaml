@@ -57,6 +57,7 @@ namespace: "weather"
 
 ingress:
   enabled: true
+  ingressClassName: nginx
   hosts:
     - host: weather.local
       paths:
