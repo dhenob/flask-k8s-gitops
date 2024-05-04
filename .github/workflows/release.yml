@@ -17,18 +17,22 @@ jobs:
     - name: Update Helm values file
       run: |
         echo "Updating image tag to ${{ github.event.inputs.version }}"
-        sed -i 's/tag: .*/tag: "${{ github.event.inputs.version }}"/' helm-chart/values.yaml
+        sed -i "s/tag: .*/tag: \"${{ github.event.inputs.version }}\"/" helm-chart/values.yaml
 
     - name: Setup Git config
       run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
+        git config user.name 'github-actions'
+        git config user.email 'github-actions@github.com'
 
-    - name: Commit changes
+    - name: Commit and push changes
+      env:
+        MY_PERSONAL_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
         git add helm-chart/values.yaml
         git commit -m "Update Helm chart for release ${{ github.event.inputs.version }}"
-        git push
-
-    - name: Optional - Trigger Deployment
-      run: echo "Trigger any deployment scripts or webhook calls here"
+        if git push https://${MY_PERSONAL_TOKEN}@github.com/dhenob/flask-k8s-gitops.git HEAD:main; then
+          echo "Changes pushed successfully."
+        else
+          echo "Failed to push changes."
+          exit 1
+        fi
