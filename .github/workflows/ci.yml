@@ -32,3 +32,4 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: dhenob/weather:${{ steps.get_version.outputs.version }}
+        platforms: linux/arm64
