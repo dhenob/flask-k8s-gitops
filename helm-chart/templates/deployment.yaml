@@ -39,11 +39,11 @@ spec:
             - containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           env:
-            - name: SECURE_WEATHER_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: weather-api-key
-                  key: api_key
+          - name: SECURE_WEATHER_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: weather-api-key
+                key: SECURE_WEATHER_API_KEY
           {{- if .Values.livenessProbe }}
           livenessProbe:
             httpGet:
