@@ -6,18 +6,14 @@ WORKDIR /usr/src/app
 
 # Set environment variables to prevent Python from writing pyc files to disc and buffering stdout and stderr
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    FLASK_APP=weather_app/app.py \
-    FLASK_RUN_HOST=0.0.0.0 \
-    FLASK_RUN_PORT=8080
+    PYTHONUNBUFFERED=1
 
 # Install system dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gcc libpq-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends gcc libpq-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry
+# Install and upgrade Poetry
 RUN pip install --upgrade pip \
     && pip install poetry
 
@@ -26,7 +22,7 @@ RUN poetry config virtualenvs.create false
 
 # Install project dependencies by copying only the necessary files and installing dependencies
 COPY poetry.lock pyproject.toml ./
-RUN poetry install --no-dev --no-interaction --no-ansi
+RUN poetry install --only main --no-interaction --no-ansi
 
 # Create a non-root user and switch to it
 # Set the user ID and group ID to 1000 to align with your Kubernetes fsGroup
@@ -42,5 +38,5 @@ COPY --chown=appuser:appgroup weather_app ./weather_app
 # Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the Flask application using the environment variables set
-CMD ["flask", "run"]
+# Command to run the Weather application using Gunicorn
+CMD ["poetry", "run", "gunicorn", "-w 4", "-b :8080", "weather_app.app:app"]
