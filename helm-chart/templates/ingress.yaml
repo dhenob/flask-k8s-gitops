@@ -9,7 +9,7 @@ spec:
   - host: weather.local
     http:
       paths:
-      - path: /weather
+      - path: /
         pathType: Prefix
         backend:
           service:
