@@ -1,0 +1,74 @@
+# General
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+# Python files
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Flask specifics
+instance/
+.webassets-cache
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Virtual environment
+venv/
+ENV/
+
+# Environment variables
+.env
+
+# Docker files
+**/Dockerfile.*
+docker-compose*.yml
+*.dockerignore
+**/.dockerenv
+**/.env
+
+# Docker volumes
+**/data/
+
+# Docker build files
+**/build/
+**/target/
+
+# Helm files
+**/charts/*.tgz
+**/charts/*.tar.gz
+**/tmpcharts/
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfplan
+*.terraformrc
+terraform.rc
+
+# Ignore Terraform workspace files
+**/.terraform/*
+
+# Terraform CLI log files
+terraform.log
+
+# Helm plugin manager
+plugins/
+
+# Exclude Helm dependency directories
+**/charts/*/charts
+
+# Exclude saved Helm values
+**/helmfile.d/
+**/helmfile.yaml
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
